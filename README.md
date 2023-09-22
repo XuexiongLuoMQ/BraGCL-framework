@@ -31,7 +31,7 @@ The proposed method(BraGCL) outperforms all baseline methods on three datasets.
 ![BraGCL-Performance](img/performance.jpg)
 **Note**: 
 * PreGCN is designed by us to contrast the performance of our framework with the pre-training model. It contains three components: 1 MLP layer(unified input dimension of GNN), 2-GCN layers, and 1-MLP layer(classification). `PPMI` has been used to pre-train the model, and `HIV`, `BP`, and `ABIDE` are used to fine-tune the model respectively.  
-* `PPMI` could be downloaded from <a herf="https://www.ppmi-info.org/">[PPMI]</a>  
+* `PPMI` could be downloaded from <a href="https://www.ppmi-info.org/">[PPMI]</a>  
 
 ## Brain Disorder Analysis
 Visualizing salient brain regions and connections for different brain disorders.
