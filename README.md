@@ -14,8 +14,8 @@ Given the neuroimaging of one brain disorder, we first preprocess these neuroima
 
 ### dataset
 In this project, three datasets have been evaluated, including `HIV`, `BP` and `ABIDE`.
-- *HIV* and *BP* are private datasets that can not be accessed without authorization.
-- *ABIDE* is a public dataset that could be downloaded from <a href="https://nilearn.github.io/stable/modules/generated/nilearn.datasets.fetch_abide_pcp.html#nilearn.datasets.fetch_abide_pcp">[Nilearn]</a>
+- **HIV** and *BP* are private datasets that can not be accessed without authorization.
+- **ABIDE** is a public dataset that could be downloaded from <a href="https://nilearn.github.io/stable/modules/generated/nilearn.datasets.fetch_abide_pcp.html#nilearn.datasets.fetch_abide_pcp">[Nilearn]</a>
 
 ## Pipeline
 ### 1.Data Preparation
@@ -29,8 +29,8 @@ After the unsupervised model pre-training above, we utilize brain graph represen
 ## Performance Contrast 
 The proposed method(BraGCL) outperforms all baseline methods on three datasets.
 ![BraGCL-Performance](img/performance.jpg)
-<mark>Note$^1$:</mark> PreGCN is designed by us to contrast the performance of our framework with the pre-training model. It contains three components: 1-MLP layer(unified input dimension of GNN), 2-GCN layers, and 1-MLP layer(classification). `PPMI` has been used to pre-train the model, and `HIV`, `BP`, and `ABIDE` are used to fine-tune the model respectively.
-<mark>Note$^2$:</mark> `PPMI` could be downloaded from <a herf="https://www.ppmi-info.org/">PPMI</a>
+<font color=#0099ff>Note:</font> PreGCN is designed by us to contrast the performance of our framework with the pre-training model. It contains three components: 1 MLP layer(unified input dimension of GNN), 2-GCN layers, and 1-MLP layer(classification). `PPMI` has been used to pre-train the model, and `HIV`, `BP`, and `ABIDE` are used to fine-tune the model respectively.  
+<font color=#0099ff>Note:</font>: `PPMI` could be downloaded from <a herf="https://www.ppmi-info.org/">PPMI</a>  
 
 ## Brain Disorder Analysis
 Visualizing salient brain regions and connections for different brain disorders.
