@@ -13,7 +13,10 @@ Generating a *Functional/Structural* connectivity from a preprocessed *FMRI/DTI*
 ![BraGCL-BuildBrainNetwork](img/BrainNetwor.jpg)
 
 ## Pipeline
-xxx
+the input data is *Functional/Structural Connectivity*
+the framework contains two stages.
+1. Training stage: train the model could get representative graph representations based on constructive learning, which is unsupervised learning in this stage.
+2. Evaluating stage: generating graph representations from stage-1-model, and then classifying it using 1-layer MLP.
 
 # Experiment
 ## Performance
@@ -42,6 +45,6 @@ To run our model on any of the datasets in our paper, simply run:
 ```
 python main.py --dataset =<dataset name> --modality=<fmri/dti>
 ```
-`--dataset` is the name of the dataset
-`--modality` is the type of data, selecting from `fmri` and `dti`
-Please place the dataset files in the `data/` folder under the root folder
+`--dataset` is the name of the dataset  
+`--modality` is the type of data, selecting from `fmri` and `dti`  
+Please place the dataset files in the `data/` folder under the root folder  
