@@ -17,7 +17,7 @@ xxx
 
 # Experiment
 ## Performance
-![BraGCL-Performance](img/performance.pdf)
+![BraGCL-Performance](img/performance.jpg)
 
 ## Brain Disorder Analysis
 ![BraGCL-BDA](img/visulaization.pdf)
