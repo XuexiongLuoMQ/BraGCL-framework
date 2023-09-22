@@ -9,7 +9,7 @@ We propose an interpretable brain graph contrastive learning framework that aims
 
 # Implementation
 ## Brain Graph Construction
-Generating a *Functional/Structural* connectivity from a preprocessed *FMRI/DTI* image. Then construct an adjacent matrix via the K-NN algorithm.
+Given the neuroimaging of one brain disorder, we first preprocess these neuroimaging according to the process described by <a href="https://github.com/HennyJie/BrainGB">[BrainGB]</a>. Then, we generate the connectivity matrix, such as the functional connectivity matrix of fMRI and the structural connectivity matrix of DTI. Finally, we construct the adjacent matrix via the K-NN algorithm.
 ![BraGCL-BuildBrainNetwork](img/BNC.jpg)
 
 ## Pipeline
