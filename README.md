@@ -1,5 +1,5 @@
-# BraGCL-framework
-The paper of WSDM 2024 Demo: **An Interpretable Brain Graph Contrastive Learning Framework for Brain Disease Diagnosis**
+# BraGCL-Brain Graph Contrastive Learning Framework
+The paper of WSDM 2024 Demo: **An Interpretable Brain Graph Contrastive Learning Framework for Brain Disease Analysis**
 
 # Introduction
 We propose an interpretable brain graph contrastive learning framework that aims to learn brain graph representations from insufficient label data for disease prediction and pathogenic analysis. Our framework consists of two key designs: We first use the controllable data augmentation strategy to perturb unimportant structures and attribute features according to node and edge importance scores. Then, considering that the difference between healthy control and patient brain graphs is small, we introduce hard negative sample evaluation to weight negative samples of the contrastive loss, which can learn more discriminative brain graph representations. More importantly, our method can observe salient brain regions and connections to explain prediction results. We conducted disease prediction and interpretable analysis experiments on three publicly available neuroimaging datasets to demonstrate the effectiveness of our framework.
@@ -7,23 +7,26 @@ We propose an interpretable brain graph contrastive learning framework that aims
 # Framework
 ![BraGCL-Framework](img/framework.jpg)
 
-# Implement
+# Implementation
 ## Brain Graph Construction
 Generating a *Functional/Structural* connectivity from a preprocessed *FMRI/DTI* image. Then construct an adjacent matrix via the K-NN algorithm.
 ![BraGCL-BuildBrainNetwork](img/BrainNetwor.jpg)
 
 ## Pipeline
-the input data is *Functional/Structural Connectivity*
-the framework contains two stages.
-1. Training stage: train the model could get representative graph representations based on constructive learning, which is unsupervised learning in this stage.
-2. Evaluating stage: generating graph representations from stage-1-model, and then classifying it using 1-layer MLP.
+###1. Data Preparation
+The input of neuroimaging data, such as fMRI and DTI, is first preprocessed and they are modeled into brain graphs based on the above construction process.
+###2. Model Training
+BraGCL first performs the controllable data augmentation strategy to perturb unimportant structures and attribute features according to node and edge importance scores, so that the input brain graph will generate two different views of brain graphs. Secondly, BraGCL conducts the optimization of contrastive loss based on hard negative samples weight to enhance the ability of discriminative brain graph representations learning. 
+###3.Model Evaluation
+After the unsupervised model pre-training above, we utilize brain graph representations obtained by the pre-trained model above to predict disease and identify salient brain regions and connections.
 
 # Experiment
 ## Performance
-The proposed method(BraGCL) outperforms baseline methods in three datasets.
+The proposed method(BraGCL) outperforms all baseline methods on three datasets.
 ![BraGCL-Performance](img/performance.jpg)
 
 ## Brain Disorder Analysis
+Visualizing salient brain regions and connections for different brain disorders.
 ![BraGCL-BDA](img/visulaization.jpg)
 
 # Running
