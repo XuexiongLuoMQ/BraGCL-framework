@@ -56,6 +56,6 @@ To run our model on any of the datasets in our paper, simply run:
 ```
 python main.py --dataset =<dataset name> --modality=<fmri/dti>
 ```
-`--dataset` is the name of the dataset(`HIV`, `BP` are private datasets, `ABIDE` is a public dataset that could be used for everyone)
+`--dataset` is the name of the dataset(`HIV`, `BP` are private datasets, `ABIDE` is a public dataset that could be used for everyone)  
 `--modality` is the type of data, selecting from `fmri` and `dti`  
-Please place the dataset files in the `data/` folder under the root folder  
+Please place the dataset files in the `data/` folder under the root folder    
