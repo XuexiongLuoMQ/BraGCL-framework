@@ -17,7 +17,31 @@ xxx
 
 # Experiment
 ## Performance
+The proposed method(BraGCL) outperforms baseline methods in three datasets.
 ![BraGCL-Performance](img/performance.jpg)
 
 ## Brain Disorder Analysis
-![BraGCL-BDA](img/visulaization.pdf)
+![BraGCL-BDA](img/visulaization.jpg)
+
+# Running
+## Requirement
+The framework needs the following dependencies:
+```
+torch~=1.10.2
+numpy~=1.22.2
+scikit-learn~=1.0.2
+scipy~=1.7.3
+pandas~=1.4.1
+tqdm~=4.62.3
+torch-geometric~=2.0.3
+torch-cluster 1.5.9
+faiss-cpu 1.7.2
+```
+## Run
+To run our model on any of the datasets in our paper, simply run:
+```
+python main.py --dataset =<dataset name> --modality=<fmri/dti>
+```
+`--dataset` is the name of the dataset
+`--modality` is the type of data, selecting from `fmri` and `dti`
+Please place the dataset files in the `data/` folder under the root folder
