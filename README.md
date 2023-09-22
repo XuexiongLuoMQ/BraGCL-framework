@@ -12,6 +12,11 @@ We propose an interpretable brain graph contrastive learning framework that aims
 Given the neuroimaging of one brain disorder, we first preprocess these neuroimaging according to the process described by <a href="https://github.com/HennyJie/BrainGB">[BrainGB]</a>. Then, we generate the connectivity matrix, such as the functional connectivity matrix of fMRI and the structural connectivity matrix of DTI. Finally, we construct the adjacent matrix via the K-NN algorithm.
 ![BraGCL-BuildBrainNetwork](img/BNC.jpg)
 
+### dataset
+In this project, three datasets have been evaluated, including `HIV`, `BP` and `ABIDE`.
+- *HIV* and *BP* are private datasets that can not be accessed without authorization.
+- *ABIDE* is a public dataset that could be downloaded from <a href="https://nilearn.github.io/stable/modules/generated/nilearn.datasets.fetch_abide_pcp.html#nilearn.datasets.fetch_abide_pcp">[Nilearn]</a>
+
 ## Pipeline
 ### 1.Data Preparation
 The input of neuroimaging data, such as fMRI and DTI, is first preprocessed and they are modeled into brain graphs based on the above construction process.
@@ -24,6 +29,8 @@ After the unsupervised model pre-training above, we utilize brain graph represen
 ## Performance Contrast 
 The proposed method(BraGCL) outperforms all baseline methods on three datasets.
 ![BraGCL-Performance](img/performance.jpg)
+<mark>Note$^1$:</mark> PreGCN is designed by us to contrast the performance of our framework with the pre-training model. It contains three components: 1-MLP layer(unified input dimension of GNN), 2-GCN layers, and 1-MLP layer(classification). `PPMI` has been used to pre-train the model, and `HIV`, `BP`, and `ABIDE` are used to fine-tune the model respectively.
+<mark>Note$^2$:</mark> `PPMI` could be downloaded from <a herf="https://www.ppmi-info.org/">PPMI</a>
 
 ## Brain Disorder Analysis
 Visualizing salient brain regions and connections for different brain disorders.
@@ -48,6 +55,6 @@ To run our model on any of the datasets in our paper, simply run:
 ```
 python main.py --dataset =<dataset name> --modality=<fmri/dti>
 ```
-`--dataset` is the name of the dataset  
+`--dataset` is the name of the dataset(`HIV`, `BP` are private datasets, `ABIDE` is a public dataset that could be used for everyone)
 `--modality` is the type of data, selecting from `fmri` and `dti`  
 Please place the dataset files in the `data/` folder under the root folder  
