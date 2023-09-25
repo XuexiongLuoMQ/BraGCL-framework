@@ -2,7 +2,7 @@ import torch
 import scipy.io
 import numpy as np
 
-def Adjacency_KNN(fc_data: np.ndarray, k=5):
+def Adjacency_KNN(fc_data: np.ndarray, k=6):
     if k == 0:
         return np.copy(fc_data)
     adjacency = np.zeros(fc_data.shape)
