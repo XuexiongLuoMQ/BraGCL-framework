@@ -36,7 +36,7 @@ class MyOwnDataset(InMemoryDataset):
     def process(self):
         # Read data into huge `Data` list.
         data_list = []
-        cor_adj, bi_adj, labels = utils.load_data(os.path.join(self.raw_dir, self.raw_file_names), self.modality)
+        cor_adj, bi_adj, labels = utils.load_data(os.path.join(self.raw_dir, self.raw_file_names), self.name, self.modality)
 
         for i in range(cor_adj.shape[0]):
             edge_index, edge_attr = utils.getEdgeIdxAttr(bi_adj[i])
