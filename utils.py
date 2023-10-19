@@ -2,7 +2,7 @@ import torch
 import scipy.io
 import numpy as np
 
-def Adjacency_KNN(fc_data: np.ndarray, k=6):
+def Adjacency_KNN(fc_data: np.ndarray, k=5):
     if k == 0:
         return np.copy(fc_data)
     adjacency = np.zeros(fc_data.shape)
@@ -25,10 +25,24 @@ def Binary_adjacency(cor_adjacency: np.array):
             bi_adjacency[subject_idx][row][col] = 1 if graph[row][col] != 0 else 0
    return bi_adjacency
 
-def load_data(root, modality='fmri'):
+def load_data(root, name, modality='fmri'):
    file = scipy.io.loadmat(root)
-   data, labels = file[modality], torch.Tensor(file['label']).long().flatten()
-   
+   labels = torch.Tensor(file['label']).long().flatten()
+   if name in ['HIV','BP']:
+      data = file[modality].transpose(2,0,1)
+   elif name == 'PPMI':
+        X = file['X']
+        data = np.zeros((X.shape[0], 84, 84))
+        if modality == 'dti':
+            model_index = 2
+        else:
+            model_index = int(modality)
+
+        for (index, sample) in enumerate(X):
+            data[index, :, :] = sample[0][:, :, model_index]
+   else:
+      data = file[modality]
+   labels[labels == -1] = 0
    cor_adj = Adjacency_KNN(data)
    bi_adj = Binary_adjacency(cor_adj)
 
