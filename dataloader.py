@@ -27,7 +27,7 @@ class MyOwnDataset(InMemoryDataset):
     
     @property
     def processed_file_names(self):
-        return f'{self.name}.pt'
+        return f'{self.name}_{self.modality}.pt'
 
     def download(self):
         # Download to `self.raw_dir`.

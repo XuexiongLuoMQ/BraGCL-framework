@@ -44,7 +44,7 @@ def train(model, optimizer, dataloader, estimator, epoch):
         z1 = model(x_1, edge_index_1, data.batch)
         z2 = model(x_2, edge_index_2, data.batch)
         
-        loss = model.loss(z1, z2, estimator, epoch, data.batch)
+        loss = model.loss(z1, z2, estimator, epoch)
         
         loss.backward()
         optimizer.step()
@@ -100,13 +100,17 @@ def gridtrain(data_loader, data_loader_eval):
         utils.adjust_learning_rate(optimizer, epoch, learning_rate_gnn)
         loss = train(model, optimizer, data_loader, auEst, epoch)
         
-        now = t()
-        print(f'(T) | Epoch={epoch:03d}, loss={loss:.4f}, 'f'this epoch {now - prev:.4f}, total {now - start:.4f}')
-        prev = now
+        # now = t()
+        # print(f'(T) | Epoch={epoch:03d}, loss={loss:.4f}, 'f'this epoch {now - prev:.4f}, total {now - start:.4f}')
+        # prev = now
+        # if epoch % 10 == 0:
+        #     acc, acc_std, f1ma, f1ma_std, auc, auc_std = test(model, data_loader_eval)
+        #     print( f'ACC: {acc:.4f}±{acc_std:.4f}, F1Ma: {f1ma:.4f}±{f1ma_std:.4f}, AUC: {auc:.4f}±{auc_std:.4f}')
+
 
     print(f"=== Result===")
     acc, acc_std, f1ma, f1ma_std, auc, auc_std = test(model, data_loader_eval)
-    print( f'Accuracy:{acc:.4f}±{acc_std:.4f}, F1Ma:{f1ma:.4f}±{f1ma_std:.4f}, AUC:{auc:.4f}±{auc_std:.4f}')
+    print( f'ACC: {acc:.4f}±{acc_std:.4f}, F1Ma: {f1ma:.4f}±{f1ma_std:.4f}, AUC: {auc:.4f}±{auc_std:.4f}')
     return acc, f1ma, auc
 
 
@@ -121,16 +125,15 @@ def setup_seed(seed):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset', type=str, default='HIV')
-    parser.add_argument('--config', type=str, default='./config.yaml')
-    parser.add_argument('--lrdec_1', type=float, default=0.8)
-    parser.add_argument('--lrdec_2', type=int, default=200)
+    parser.add_argument('--config', type=str, default='BraGCL/config.yaml')
     parser.add_argument('--model', type = str, default='GCN')
     parser.add_argument('--num_gpu',type = str, default = 'cuda')
     parser.add_argument('--runtimes',type = int, default = 1)
     parser.add_argument('--start_e', type=float, default =0.3)
-    parser.add_argument('--start_w', type=float, default =0.6)
-    parser.add_argument('--reward', type=float, default =6)
+    parser.add_argument('--start_w', type=float, default =0.3)
+    parser.add_argument('--reward', type=float, default =1)
     parser.add_argument('--modality', type=str, default='fmri')
+    parser.add_argument('--seed', type=int, default=924)
     
     args = parser.parse_args()
 
@@ -143,7 +146,6 @@ if __name__ == '__main__':
     num_layers = config['num_layers']
     num_mid_hidden = config['num_mid_hidden']
     num_epochs = config['num_epochs']
-    batch_size= config['batch_size']
     model_encoder =  ({'GCN':EncoderGCN})[args.model]
     tau = config['tau']
     lambda_edge = config['lambda_edge']
@@ -151,8 +153,9 @@ if __name__ == '__main__':
     edge_p = config['edge_p']
     node_p = config['node_p']
     k_near = config['k_near']
+    batchSize = config['batch_size']
 
-    setup_seed(config['seed'])
+    setup_seed(args.seed)
     
     device = torch.device(args.num_gpu if torch.cuda.is_available() else 'cpu')
 
@@ -165,8 +168,8 @@ if __name__ == '__main__':
     for i in range(args.runtimes):
 
         dataset.shuffle()
-        data_loader = DataLoader(dataset, batch_size=128, shuffle=True)
-        data_loader_eval = DataLoader(dataset, batch_size=128, shuffle=True)
+        data_loader = DataLoader(dataset, batch_size=batchSize, shuffle=True)
+        data_loader_eval = DataLoader(dataset, batch_size=batchSize, shuffle=True)
 
         acc, f1ma, auc = gridtrain(data_loader, data_loader_eval)
         accuracies.append(acc)
