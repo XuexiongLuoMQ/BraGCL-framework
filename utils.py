@@ -58,8 +58,8 @@ def getEdgeIdxAttr(adj):
    return torch.stack(index, dim=0), edge_attr
 
 
-def adjust_learning_rate(optimizer, epoch, learning_rate, lrdec_1=0.8, lrdec_2=200):
+def adjust_learning_rate(optimizer, epoch, learning_rate, lrdec_1=0.5, lrdec_2=10):
     lr = learning_rate * (lrdec_1 ** (epoch // lrdec_2))
     for param_group in optimizer.param_groups:
         param_group['lr'] = lr
- 
+    
