@@ -1,52 +1,49 @@
 ABIDE:
   GCN:
-    seed: 904
     learning_rate_gnn: 0.001
-    learning_rate_aul: 0.0005
+    learning_rate_aul: 0.001
     num_hidden: 256
     num_mid_hidden: 256
+    batch_size: 32
     tau: 0.4
     num_epochs: 100
     num_layers: 2
-    lambda_edge: 2
-    lambda_node: 3
-    batch_size: 128
+    lambda_edge: 1
+    lambda_node: 2
     edge_p: 0.2
-    node_p: 0.2
-    k_near: 5
-
-
-HIV:
-  GCN:
-    seed: 914
-    learning_rate_gnn: 0.001
-    learning_rate_aul: 0.0005
-    num_hidden: 256
-    num_mid_hidden: 256
-    tau: 0.4
-    num_epochs: 50
-    num_layers: 2
-    lambda_edge: 2
-    lambda_node: 3
-    batch_size: 128
-    edge_p: 0.3
     node_p: 0.3
     k_near: 5
 
 
 BP:
   GCN:
-    seed: 924
     learning_rate_gnn: 0.001
     learning_rate_aul: 0.0005
     num_hidden: 256
     num_mid_hidden: 256
-    tau: 0.4
-    num_epochs: 50
-    num_layers: 2
-    lambda_edge: -1
-    lambda_node: 1
     batch_size: 128
+    tau: 0.4
+    num_epochs: 100
+    num_layers: 2
+    lambda_edge: 1
+    lambda_node: -1
     edge_p: 0.3
-    node_p: 0.3
+    node_p: 0.4
     k_near: 5
+
+HIV:
+  GCN:
+    learning_rate_gnn: 0.001
+    learning_rate_aul: 0.001
+    num_hidden: 256
+    num_mid_hidden: 256
+    batch_size: 32
+    tau: 0.4
+    num_epochs: 100
+    num_layers: 2
+    lambda_edge: 3
+    lambda_node: 2
+    edge_p: 0.3
+    node_p: 0.2
+    k_near: 5
+
