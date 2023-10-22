@@ -57,27 +57,29 @@ class Model(torch.nn.Module):
     def projection(self, z: torch.Tensor) -> torch.Tensor:
         z = F.elu(self.fc1(z))
         return self.fc2(z)
-
-    def loss(self, z1: torch.Tensor, z2: torch.Tensor,
-             estimator:AUL.AUEstimator, epoch, mean: bool = True, batch_size: int = 0):
-        
-        h1 = self.projection(z1)
-        h2 = self.projection(z2)
-
+    
+    def semi_loss(self, h1: torch.Tensor, h2: torch.Tensor, weights):
         batch_size, _ = h1.size()
         x_abs = h1.norm(dim=1)
         x_aug_abs = h2.norm(dim=1)
-        
 
         sim_matrix = torch.einsum('ik,jk->ij', h1, h2) / torch.einsum('i,j->ij', x_abs, x_aug_abs)
         sim_matrix = torch.exp(sim_matrix / self.tau)
         pos_sim = sim_matrix[range(batch_size), range(batch_size)]
 
-        uncertainty = estimator.weightCal(h1.detach().cpu().numpy(), h2.detach().cpu().numpy(), epoch)
-        weights = (1/torch.mean(uncertainty)) * uncertainty
         second_t = weights.to(device)*sim_matrix
         wpos_sim = second_t[range(batch_size), range(batch_size)]
-        loss = pos_sim / (pos_sim + (second_t.sum(dim=1) - wpos_sim))
+        return pos_sim / (pos_sim + (second_t.sum(dim=1) - wpos_sim))
+
+    def loss(self, z1: torch.Tensor, z2: torch.Tensor,
+             estimator:AUL.AUEstimator, epoch):
+        
+        h1 = self.projection(z1)
+        h2 = self.projection(z2)
+        
+        uncertainty = estimator.weightCal(h1.detach().cpu().numpy(), h2.detach().cpu().numpy(), epoch)
+        weights = (1/torch.mean(uncertainty)) * uncertainty
+        loss = (self.semi_loss(h1, h2, weights) + self.semi_loss(h2, h1, weights)) * 0.5
         loss = - torch.log(loss).mean() 
         return loss
 

@@ -34,7 +34,7 @@ class AUEstimator:
     
     def uncertaintyEstimator(self, negSample, pLabels, epoch):
 
-        data_loader = DataLoader(dataloader.MLPDataset(negSample, pLabels), batch_size=128, shuffle=True)
+        data_loader = DataLoader(dataloader.MLPDataset(negSample, pLabels), batch_size=16, shuffle=True)
         if epoch < self.wtrain_epoch:
             utils.adjust_learning_rate(self.optimizer, epoch, self.learning_rate)
             for _ in range(10):
@@ -43,31 +43,28 @@ class AUEstimator:
         return test(self.model, data_loader)
 
 def binaryPartition(anchor, negSample, k=2):
-        k_means = cluster.KMeans(k, init=kmeans_plus(negSample, 2, anchor, random_state=np.random.randint(1000)), n_init=1)
-        k_means.fit(negSample)
-        return k_means
+    k_means = cluster.KMeans(k, init=kmeans_plus(negSample, 2, anchor), n_init=1)
+    k_means.fit(negSample)
+    return k_means
+    # return k_means
 
-def kmeans_plus(X, n_clusters, fc, random_state=42):
-    np.random.seed(random_state)
+def kmeans_plus(X, n_clusters, fc):
     centroids = [fc]
-
+    
     for _ in range(1, n_clusters):
         dist_sq = np.array([min([np.inner(c-x,c-x) for c in centroids]) for x in X])
         probs = dist_sq/dist_sq.sum()
         cumulative_probs = probs.cumsum()
         r = np.random.rand()
-        
         for j, p in enumerate(cumulative_probs):
             if r < p:
                 i = j
                 break
-        
         centroids.append(X[i])
-
     return np.array(centroids)
 
 
-def train(model, optimizer, loss_function, data_loader, epoch, reward=5):
+def train(model, optimizer, loss_function, data_loader, epoch, reward):
 
     model.train()
 
