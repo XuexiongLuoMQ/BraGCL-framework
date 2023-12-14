@@ -21,12 +21,12 @@ In this project, three datasets have been evaluated, including `HIV`, `BP` and `
 ### 1.Data Preparation
 The input of neuroimaging data, such as fMRI and DTI, is first preprocessed and they are modeled into brain graphs based on the above construction process.
 ### 2.Model Training
-BraGCL first performs the controllable data augmentation strategy to perturb unimportant structures and attribute features according to node and edge importance scores, so that the input brain graph will be generated two different views of brain graphs. Secondly, BraGCL conducts the optimization of contrastive loss based on hard negative samples weight to enhance the ability of discriminative brain graph representations learning. 
+BraGCL first performs the controllable data augmentation strategy to perturb unimportant structures and attribute features according to node and edge importance scores, so that the input brain graph will be generated two different views of brain graphs. Secondly, BraGCL conducts the optimization of contrastive loss based on hard negative samples weight to enhance the ability of discriminative brain graph representation learning. 
 ### 3.Model Evaluation
 After the unsupervised model pre-training above, we utilize brain graph representations obtained by the pre-trained model above to predict disorder and identify salient brain regions and connections.
 
 # Experiment
-## Performance Contrast 
+## Performance Evaluation
 The proposed method(BraGCL) outperforms all baseline methods on three datasets.
 ![BraGCL-Performance](img/performance_update.png)
 
