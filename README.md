@@ -41,7 +41,7 @@ Visualizing salient brain regions and connections for different brain disorders.
 1. Hyperparameters $\epsilon, \gamma$ are computed by the distributions of edge and node importance in the brain graph, as follows:
 $\epsilon= \mu_{s} + \lambda_{s} ∗ \sigma_{s}$, where $\mu_{s}$ and $\sigma_{s}$ are the mean value and standard deviation of all edge scores from a graph. $\lambda_{s}$ is the hyperparameter to control the size of important part, because the range of importance scores can be different for different datasets.
 2. Similarly, $\gamma= \mu_{f} + \lambda_{f} ∗ \sigma_{f}$, where $\mu_{f}$ and $\sigma_{f}$ are the mean value and standard deviation of all node scores from a graph.
-3. $\beta=1/\mu_{u}$, where \mu_{u} is the mean value of hardness $\varphi$.
+3. $\beta=1/\mu_{w}$, where $\mu_{w}$ is the mean value of hardness $\varphi$.
 # Running
 ## Requirement
 The framework needs the following dependencies:
